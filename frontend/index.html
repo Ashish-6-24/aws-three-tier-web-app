@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CloudNotes is a simple message board demonstrating a three-tier web application.">
+  <title>CloudNotes — Shared Message Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="CloudNotes home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.75v4h4M8.5 12h6.5M8.5 15.5h6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+        <span>cloud<span class="brand-light">notes</span></span>
+      </a>
+      <div class="topbar-right"><span class="topbar-label"><span class="status-dot"></span> Shared workspace</span><div class="avatar" aria-label="Guest profile">G</div></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR SPACE TO SHARE</div>
+          <h1>Small thoughts.<br><span>Shared clearly.</span></h1>
+          <p class="hero-description">A simple place to leave a message, share an idea, or keep a note where everyone can see it.</p>
+          <div class="hero-meta"><span class="meta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 19 6v5.3c0 4.5-3 7.6-7 9.2-4-1.6-7-4.7-7-9.2V6l7-2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Simple. Shared. Always in sync.</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-note note-back"><span class="note-line short"></span><span class="note-line"></span><span class="note-line medium"></span></div><div class="art-note note-front"><div class="note-top"><span class="note-star">✦</span><span class="note-date">A NOTE TO SELF</span></div><div class="note-title">Make room<br>for good ideas.</div><div class="note-footer"><span></span><span>keep it simple</span></div></div><span class="spark spark-one">✳</span><span class="spark spark-two">✦</span></div>
+      </section>
+
+      <section class="workspace" aria-label="CloudNotes message board">
+        <div class="section-heading"><div><div class="eyebrow section-eyebrow">THE MESSAGE BOARD</div><h2>Latest notes <span class="count-pill" id="message-count">—</span></h2></div><button class="text-button" id="refresh-button" type="button" aria-label="Refresh messages"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.1 9A6.5 6.5 0 0 1 17 6.5L20 12M4 12l3 5.5A6.5 6.5 0 0 0 18 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Refresh</button></div>
+        <div class="content-grid">
+          <section class="notes-panel panel">
+            <div class="panel-head"><div class="panel-icon notes-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6.5 3.75h8l3 3v13.5h-11a2 2 0 0 1-2-2V5.75a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14.5 3.75v3.5h3M8 11h6M8 14.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div><div><h3>Community notes</h3><p class="panel-subtitle">Messages from the workspace</p></div></div>
+            <div id="message-box" class="message-list" aria-live="polite" aria-busy="true"><div class="loading-state"><span class="spinner"></span><span>Loading your notes…</span></div></div>
+            <div class="panel-foot"><span class="live-dot"></span> Connected to your shared message board</div>
+          </section>
+          <aside class="compose-panel panel">
+            <div class="compose-heading"><div class="panel-icon compose-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m14.5 5.5 4 4M4 20l4.2-.9L19 8.3a2.12 2.12 0 0 0-3-3L5.2 16.1 4 20Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 20h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div><div><h3>Leave a note</h3><p class="panel-subtitle">Add something to the conversation.</p></div></div>
+            <form id="message-form"><label for="message">Your message</label><textarea id="message" name="message" rows="5" maxlength="255" placeholder="What's on your mind?" required></textarea><div class="field-meta"><span>Keep it kind and constructive.</span><span id="character-count">0 / 255</span></div><button class="submit-button" id="submit-button" type="submit"><span>Publish note</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><p id="form-status" class="form-status" role="status" aria-live="polite"></p></form>
+            <div class="privacy-note"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Your note is saved to the shared database.</span></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><a class="brand footer-brand" href="#" aria-label="CloudNotes home"><span class="brand-mark small-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3.75h7l4 4v12.5H7a2 2 0 0 1-2-2v-12.5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.75v4h4M8.5 12h6.5M8.5 15.5h6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span>cloud<span class="brand-light">notes</span></span></a><span>Made for ideas worth sharing.</span><span class="footer-right">A simple three-tier web application</span></footer>
+  </div>
+
+  <script>
+    'use strict';
+    const messageBox = document.getElementById('message-box');
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message');
+    const characterCount = document.getElementById('character-count');
+    const messageCount = document.getElementById('message-count');
+    const submitButton = document.getElementById('submit-button');
+    const refreshButton = document.getElementById('refresh-button');
+    const formStatus = document.getElementById('form-status');
+
+    function setStatus(message, type = '') {
+      formStatus.textContent = message;
+      formStatus.className = type ? 'form-status ' + type : 'form-status';
+    }
+
+    function formatDate(value) {
+      if (!value) return '';
+      const date = new Date(String(value).replace(' ', 'T'));
+      if (Number.isNaN(date.getTime())) return String(value);
+      return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }).format(date);
+    }
+
+    function createMessageCard(item, index) {
+      const card = document.createElement('article');
+      card.className = 'message-card';
+      card.style.setProperty('--card-index', Math.min(index, 7));
+      const avatar = document.createElement('div');
+      avatar.className = 'message-avatar avatar-tone-' + (index % 4);
+      avatar.setAttribute('aria-hidden', 'true');
+      avatar.textContent = 'N';
+      const body = document.createElement('div');
+      body.className = 'message-content';
+      const top = document.createElement('div');
+      top.className = 'message-meta';
+      const author = document.createElement('span');
+      author.className = 'message-author';
+      author.textContent = 'Workspace note';
+      const time = document.createElement('time');
+      time.className = 'timestamp';
+      time.textContent = formatDate(item.created_at);
+      if (item.created_at) time.dateTime = String(item.created_at).replace(' ', 'T');
+      top.append(author, time);
+      const text = document.createElement('p');
+      text.className = 'message-text';
+      // Render database content as text rather than injecting HTML.
+      text.textContent = item.message == null ? '' : String(item.message);
+      body.append(top, text);
+      card.append(avatar, body);
+      return card;
+    }
+
+    async function fetchMessages() {
+      messageBox.setAttribute('aria-busy', 'true');
+      messageBox.replaceChildren();
+      const loading = document.createElement('div');
+      loading.className = 'loading-state';
+      const spinner = document.createElement('span');
+      spinner.className = 'spinner';
+      spinner.setAttribute('aria-hidden', 'true');
+      const label = document.createElement('span');
+      label.textContent = 'Loading your notes…';
+      loading.append(spinner, label);
+      messageBox.append(loading);
+      refreshButton.disabled = true;
+      try {
+        const response = await fetch('api/get_messages.php', { headers: { 'Accept': 'application/json' }, cache: 'no-store' });
+        if (!response.ok) throw new Error('Server returned HTTP ' + response.status);
+        const data = await response.json();
+        if (!data.success || !Array.isArray(data.messages)) throw new Error(data.error || 'The message service returned an unexpected response.');
+        messageBox.replaceChildren();
+        messageCount.textContent = String(data.messages.length);
+        if (data.messages.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          const icon = document.createElement('span');
+          icon.className = 'empty-icon';
+          icon.setAttribute('aria-hidden', 'true');
+          icon.textContent = '✦';
+          const title = document.createElement('h4');
+          title.textContent = 'Your board is a blank page.';
+          const detail = document.createElement('p');
+          detail.textContent = 'Be the first to leave a note.';
+          empty.append(icon, title, detail);
+          messageBox.append(empty);
+        } else {
+          data.messages.forEach((item, index) => messageBox.append(createMessageCard(item, index)));
+        }
+      } catch (error) {
+        console.error('Unable to load messages:', error);
+        messageBox.replaceChildren();
+        const errorBlock = document.createElement('div');
+        errorBlock.className = 'error-state';
+        const title = document.createElement('strong');
+        title.textContent = 'We couldn’t load the notes.';
+        const detail = document.createElement('p');
+        detail.textContent = 'Check the connection and try refreshing the board.';
+        const retry = document.createElement('button');
+        retry.type = 'button';
+        retry.className = 'inline-retry';
+        retry.textContent = 'Try again';
+        retry.addEventListener('click', fetchMessages);
+        errorBlock.append(title, detail, retry);
+        messageBox.append(errorBlock);
+        messageCount.textContent = '!';
+      } finally {
+        messageBox.setAttribute('aria-busy', 'false');
+        refreshButton.disabled = false;
+      }
+    }
+
+    messageInput.addEventListener('input', () => { characterCount.textContent = messageInput.value.length + ' / 255'; });
+    messageForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const message = messageInput.value.trim();
+      if (!message) {
+        setStatus('Please write a note before publishing.', 'error-text');
+        messageInput.focus();
+        return;
+      }
+      submitButton.disabled = true;
+      submitButton.classList.add('is-loading');
+      submitButton.querySelector('span').textContent = 'Publishing…';
+      setStatus('');
+      try {
+        const response = await fetch('api/save_message.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+          body: new URLSearchParams({ message }).toString()
+        });
+        if (!response.ok) throw new Error('Server returned HTTP ' + response.status);
+        const data = await response.json();
+        if (!data.success) throw new Error(data.error || 'The note could not be saved.');
+        messageForm.reset();
+        characterCount.textContent = '0 / 255';
+        setStatus('Your note has been published.', 'success-text');
+        await fetchMessages();
+      } catch (error) {
+        console.error('Unable to save message:', error);
+        setStatus(error.message || 'Something went wrong. Please try again.', 'error-text');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove('is-loading');
+        submitButton.querySelector('span').textContent = 'Publish note';
+      }
+    });
+    refreshButton.addEventListener('click', fetchMessages);
+    fetchMessages();
+  </script>
+</body>
+</html>
+
