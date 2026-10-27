@@ -9,8 +9,8 @@
 function getDatabaseConnection() {
     $host = 'demo-database.csnu0ao8chqz.us-east-1.rds.amazonaws.com';
     $db_name = 'hello_world';
-    $username = 'admin';
-    $password = 'Ashish321';
+    $username = 'update_admin';
+    $password = 'update_password';
     
     $dsn = "mysql:host=$host;dbname=$db_name;charset=utf8mb4";
     $options = [
